@@ -13,7 +13,7 @@
             Tab = tab;
             QteMov = 0;
         }
-
+        
 
 
     }
