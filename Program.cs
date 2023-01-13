@@ -1,13 +1,12 @@
-﻿using Tabuleiro;
+﻿using tabuleiro;
 using System;
 namespace chess_game_console
 {
     class Program
     {
-        private static void Main(string[] args)
+        private static void Main(string[] args) //Programa Principal
         {
-            Posicao P = new Posicao(3,4);
-            Console.WriteLine(P);
+            Console.ReadLine();
             
         }
 
