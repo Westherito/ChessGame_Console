@@ -16,5 +16,11 @@
             return Pecas[linhas,colunas];
         }
 
+        public void ColocPeca(Peca p, Posicao pos)// Método para colocação de peças, em qual tabuleiro, e a posição
+        {
+            Pecas[pos.Linha, pos.Coluna] = p;
+            p.Posicao = pos;
+        }
+
     }
 }
