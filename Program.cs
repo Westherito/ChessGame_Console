@@ -1,12 +1,17 @@
 ﻿using tabuleiro;
 using System;
-namespace chess_game_console
+namespace ChessGame_console
 {
     class Program
     {
         private static void Main(string[] args) //Programa Principal
         {
+            Tabuleiro tab = new Tabuleiro(8, 8);
+
+            Tela.printTab(tab);
+
             Console.ReadLine();
+
             
         }
 

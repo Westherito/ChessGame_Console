@@ -4,9 +4,7 @@
     {
         public int Linha { get; set; }
         public int Coluna { get; set; }
-
-        //Construtor para definir a posição
-        public Posicao(int linha, int coluna)
+        public Posicao(int linha, int coluna) //Construtor para definir a posição
         {
             Linha = linha;
             Coluna = coluna;
