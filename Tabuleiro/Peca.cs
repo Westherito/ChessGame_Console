@@ -13,6 +13,11 @@
             Tab = tab;
             QteMov = 0;
         }
+
+        public void incremtQteMov()
+        {
+            QteMov++;
+        }
         
 
 
