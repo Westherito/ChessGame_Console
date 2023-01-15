@@ -1,4 +1,5 @@
-﻿using tabuleiro;
+﻿using System.Security.Cryptography.X509Certificates;
+using tabuleiro;
 using xadrez;
 
 namespace ChessGame_console
@@ -7,12 +8,20 @@ namespace ChessGame_console
     {
         private static void Main(string[] args) //Programa Principal
         {
-            PosicaoXadrez pos = new PosicaoXadrez('c', 4);
+            try
+            {
+                Tabuleiro tab = new Tabuleiro(8, 8); //Criando o tabuleiro
 
-            Console.WriteLine(pos);
-
-            Console.WriteLine(pos.convertPos());
-
+                tab.ColocPeca(new Torre(Cor.Branca, tab), new Posicao(0, 2));
+                tab.ColocPeca(new Rei(Cor.Preta, tab), new Posicao(2, 2));
+                tab.ColocPeca(new Rainha(Cor.Preta, tab), new Posicao(6, 2));
+                tab.ColocPeca(new Torre(Cor.Branca, tab), new Posicao(5, 3));
+                Tela.printTab(tab);
+            }
+            catch (TabuleiroException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Console.ReadLine();
         }  
     }
