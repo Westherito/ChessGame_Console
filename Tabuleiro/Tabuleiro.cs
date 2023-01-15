@@ -11,11 +11,11 @@
             Colunas = colunas;
             Pecas = new Peca[linhas,colunas];
         }
-        public Peca peca(int linhas, int colunas) //metodo para acessar as peças de modo seguro
+        public Peca peca(int linhas, int colunas) //Metodo para acessar as peças de modo seguro
         {
             return Pecas[linhas,colunas];
         }
-        public Peca peca(Posicao pos) // posição das peças pela classe Posição
+        public Peca peca(Posicao pos) //Posição das peças pela classe Posição
         {
             return Pecas[pos.Linha, pos.Coluna];
         }
@@ -36,14 +36,14 @@
         }
         public bool ExistPeca(Posicao pos)
         {
-            ErroPosicao(pos); // verificando primeiro se teve erro de posição
-            return peca(pos) != null; //retornando peça
+            ErroPosicao(pos); //Verificando primeiro se teve erro de posição
+            return peca(pos) != null; //Retornando peça
         }
-        public void ColocPeca(Peca p, Posicao pos)// Método para colocação de peças, em qual tabuleiro, e a posição
+        public void ColocPeca(Peca p, Posicao pos)//Método para colocação de peças, em qual tabuleiro, e a posição
         {
             if (ExistPeca(pos))
             {
-                throw new TabuleiroException("Já existe uma peça nessa posição!"); // Exibindo erro caso ja tiver uma peça
+                throw new TabuleiroException("Já existe uma peça nessa posição!"); //Exibindo erro caso ja tiver uma peça
             }
             Pecas[pos.Linha, pos.Coluna] = p;
             p.Posicao = pos;

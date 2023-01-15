@@ -1,6 +1,6 @@
 ﻿using tabuleiro;
 
-namespace xadrex
+namespace xadrez
 {
     internal class Torre : Peca
     {

@@ -3,7 +3,7 @@ namespace ChessGame_console
 {
     class Tela
     {
-        public static void printTab(Tabuleiro tab) // configurando tela
+        public static void printTab(Tabuleiro tab) //Configurando tela
         {
             for (int i = 0; i < tab.Linhas; i++)
             {

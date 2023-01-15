@@ -1,6 +1,6 @@
 ﻿using tabuleiro;
 
-namespace xadrex
+namespace xadrez
 {
     class Peao : Peca
     {

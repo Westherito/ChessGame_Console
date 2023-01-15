@@ -9,5 +9,14 @@
             Linha = linha;
             Coluna = coluna;
         }
+
+        public override string ToString() //Imprimindo a posição convertida no convertPos()
+        {
+            return "Linha: "
+                + Linha
+                + " Coluna: "
+                + Coluna;
+
+        }
     }
 }

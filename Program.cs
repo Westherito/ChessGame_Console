@@ -1,5 +1,5 @@
 ﻿using tabuleiro;
-using xadrex;
+using xadrez;
 
 namespace ChessGame_console
 {
@@ -7,28 +7,13 @@ namespace ChessGame_console
     {
         private static void Main(string[] args) //Programa Principal
         {
-            try
-            {
-                Tabuleiro tab = new Tabuleiro(8, 8);
+            PosicaoXadrez pos = new PosicaoXadrez('c', 4);
 
-                tab.ColocPeca(new Torre(Cor.Branca, tab), new Posicao(0, 0));
-                tab.ColocPeca(new Rei(Cor.Verde, tab), new Posicao(8, 2));
-                tab.ColocPeca(new Rainha(Cor.Laranja, tab), new Posicao(3, 3));
-                Tela.printTab(tab);
+            Console.WriteLine(pos);
 
+            Console.WriteLine(pos.convertPos());
 
-
-                Console.ReadLine();
-
-            }
-            catch (TabuleiroException e)
-            {
-                Console.WriteLine(e.Message);
-                
-            }
             Console.ReadLine();
-        }
-
-        
+        }  
     }
 }
