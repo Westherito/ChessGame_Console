@@ -9,5 +9,10 @@
             Linha = linha;
             Coluna = coluna;
         }
+        public void definirVarlores(int linha , int coluna)
+        {
+            Linha = linha;
+            Coluna = coluna;
+        }
     }
 }

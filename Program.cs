@@ -7,7 +7,7 @@ namespace ChessGame_console
     {
         private static void Main(string[] args) //Programa Principal
         {
-            try
+            try //Testando programa em caso de erros
             {
                 
                 PartidaXadrez part = new PartidaXadrez();//Criando o tabuleiro
@@ -15,8 +15,17 @@ namespace ChessGame_console
                 {
                     Console.Clear();
                     Tela.printTab(part.Tab);
+
+                    Console.WriteLine();
                     Console.Write("Digite a posição origem (Letra/Número): ");
                     Posicao origem = Tela.LerPosXadrez().convertPos();
+
+                    bool[,] PosPossiveis = part.Tab.peca(origem).MovPossiveis();
+
+                    Console.Clear();
+                    Tela.printTab(part.Tab,PosPossiveis);
+
+                    Console.WriteLine();
                     Console.Write("Agora, a de destino (Letra/Número): ");
                     Posicao destino = Tela.LerPosXadrez().convertPos();
 

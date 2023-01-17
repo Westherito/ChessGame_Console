@@ -1,6 +1,6 @@
 ﻿namespace tabuleiro
 {
-    class Peca //Configuração de peças e suas caracteristicas
+    abstract class Peca //Configuração de peças e suas caracteristicas
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; protected set; }
@@ -13,13 +13,11 @@
             Tab = tab;
             QteMov = 0;
         }
-
-        public void incremtQteMov()
+        public void incremtQteMov()//Número de movimentos feitos
         {
             QteMov++;
         }
-        
-
-
+        public abstract bool[,] MovPossiveis();//Metodo que retorna true ou false dependendo do movimento da peça
+        ///Nota: ela tem que ser abstrata pois cada peça tem um movimento diferente
     }
 }

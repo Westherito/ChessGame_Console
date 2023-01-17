@@ -3,28 +3,47 @@ using tabuleiro;
 using xadrez;
 namespace ChessGame_console
 {
-    class Tela
+    class Tela //Configurando tela
     {
-        public static void printTab(Tabuleiro tab) //Configurando tela
+        public static void printTab(Tabuleiro tab) //Imprimindo tabuleiro com as peças
         {
             for (int i = 0; i < tab.Linhas; i++)
             {
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < tab.Colunas; j++)
-                {
-                    if (tab.peca(i,j) == null) {
-                        Console.Write(tab.peca(i, j));
-                        Console.Write("- ");
-                    }
-                    else
-                    {
-                        Tela.printPeca(tab.peca(i,j)); //Imprimir peca conforme a cor dele
-                        Console.Write(" ");
-                    }
+                {               
+                    printPeca(tab.peca(i,j)); //Imprimir peca conforme a cor dele ou caso for nulo
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void printTab(Tabuleiro tab, bool[,] posPossiveis) //Imprimindo tabuleiro com as peças
+        {
+            ConsoleColor bg = Console.BackgroundColor;
+            ConsoleColor bgAlt = ConsoleColor.DarkGray;
+            for (int i = 0; i < tab.Linhas; i++)
+            {
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < tab.Colunas; j++)
+                {
+                    if (posPossiveis[i, j] == true)
+                    {
+                        Console.BackgroundColor = bgAlt;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = bg;
+                    }
+                    
+                    printPeca(tab.peca(i, j)); //Imprimir peca conforme a cor dele ou caso for nulo
+                    Console.BackgroundColor = bg;
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("  a b c d e f g h");
+            Console.BackgroundColor = bg;
         }
         public static PosicaoXadrez LerPosXadrez()//Fazendo leitura das peças no tabuleiro
         {
@@ -35,19 +54,28 @@ namespace ChessGame_console
         }
         public static void printPeca(Peca peca) //Função para colorir peças no Console
         {
-            if (peca.Cor == Cor.Branca)
+            if (peca == null)
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write(peca);
-                Console.ForegroundColor = aux;
+                Console.Write("- ");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(peca);
-                Console.ForegroundColor = aux;
+                if (peca.Cor == Cor.Branca)
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(peca);
+                    Console.ForegroundColor = aux;
+                    Console.Write(" ");
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(peca);
+                    Console.ForegroundColor = aux;
+                    Console.Write(" ");
+                }
             }
         }
     }
