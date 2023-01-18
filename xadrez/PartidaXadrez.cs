@@ -4,9 +4,9 @@ namespace xadrez
 {
     class PartidaXadrez
     {
-        public Tabuleiro Tab { get; set; }
-        private int Turno;
-        private Cor JogadorAtual;
+        public Tabuleiro Tab { get; private set; }
+        public int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set; }
         public bool Termina { get; private set; } //Para terminar o jogo
 
         public PartidaXadrez()//Otimizar o tabuleiro em um construtor
@@ -23,6 +23,46 @@ namespace xadrez
             p.incremtQteMov();
             Peca PecaCapt = Tab.RetirPeca(destino);
             Tab.ColocPeca(p, destino);
+        }
+        public void realizaJogada(Posicao origem, Posicao destino)//Incrementar a passagem de turno e mudança de jogador
+        {
+            executaMov(origem, destino);
+            Turno++;
+            mudaJogador();
+
+        }
+        public void validaPosOrigem(Posicao pos)//erros em caso de escolhas feitas na origem
+        {
+            if(Tab.peca(pos) == null)
+            {
+                throw new TabuleiroException("Não existe peça na posição de origem escolhida!");
+            }
+            if (JogadorAtual != Tab.peca(pos).Cor)
+            {
+                throw new TabuleiroException("A peça de origem escolhida não é a sua!");
+            }
+            if (!Tab.peca(pos).existMovPos())
+            {
+                throw new TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida!");
+            }
+        }
+        public void validaPosDestino(Posicao origem, Posicao destino)//erros em caso de escolhas feitas na origem
+        {
+            if (!Tab.peca(origem).podeMover(destino))
+            {
+                throw new TabuleiroException("Posição Inválida");
+            }
+        }
+        private void mudaJogador()
+        {
+            if (JogadorAtual == Cor.Branca)
+            {
+                JogadorAtual = Cor.Preta;
+            }
+            else
+            {
+                JogadorAtual = Cor.Branca;
+            }
         }
         public void ColocarPecas() //Peças de xadrez e suas posições
         {
@@ -43,6 +83,7 @@ namespace xadrez
             Tab.ColocPeca(new Peao(Cor.Branca, Tab), new PosicaoXadrez('f', 2).convertPos());
             Tab.ColocPeca(new Peao(Cor.Branca, Tab), new PosicaoXadrez('g', 2).convertPos());
             Tab.ColocPeca(new Peao(Cor.Branca, Tab), new PosicaoXadrez('h', 2).convertPos());*/
+
             //Peças do jogador 2
             Tab.ColocPeca(new Torre(Cor.Preta, Tab), new PosicaoXadrez('a', 8).convertPos());
             //Tab.ColocPeca(new Cavalo(Cor.Preta, Tab), new PosicaoXadrez('b', 8).convertPos());

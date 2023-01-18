@@ -17,6 +17,27 @@
         {
             QteMov++;
         }
+        public bool existMovPos() //Verificando na matrix se existe a peça para execução de mensagens de erro;
+        {
+            bool[,] mat = MovPossiveis();
+            for (int i = 0; i < Tab.Linhas; i++)
+            {
+                for (int j =0; j < Tab.Colunas; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool podeMover(Posicao pos)//Validando se a peça se move apenas onde é permitido
+        {
+            return MovPossiveis()[pos.Linha, pos.Coluna];
+        }
+
         public abstract bool[,] MovPossiveis();//Metodo que retorna true ou false dependendo do movimento da peça
         ///Nota: ela tem que ser abstrata pois cada peça tem um movimento diferente
     }
