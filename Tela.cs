@@ -1,10 +1,48 @@
 ﻿using System;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using tabuleiro;
 using xadrez;
 namespace ChessGame_console
 {
     class Tela //Configurando tela
     {
+        public static void printPartida(PartidaXadrez part)//Imprimindo a partida de xadrez
+        {
+            Tela.printTab(part.Tab);
+            Console.WriteLine();
+            printPecasCapturadas(part);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + part.Turno);
+            Console.WriteLine("Aguardando Jogada: " + part.JogadorAtual);
+        }
+
+        public static void printPecasCapturadas(PartidaXadrez part)//Imprimindo pecas capturadas
+        {
+            Console.WriteLine("Peças Capturadas");
+            Console.Write("Brancas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            printConjunto(part.PecaCapturada(Cor.Branca));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+            Console.Write("Pretas: ");
+            ConsoleColor aux2 = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            printConjunto(part.PecaCapturada(Cor.Preta));
+            Console.ForegroundColor = aux2;
+            Console.WriteLine();
+        }
+
+        public static void printConjunto(HashSet<Peca> conj)//Parte da impressão do conjunto
+        {
+            Console.Write("[");
+            foreach (Peca x in conj)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+        }
         public static void printTab(Tabuleiro tab) //Imprimindo tabuleiro com as peças
         {
             for (int i = 0; i < tab.Linhas; i++)

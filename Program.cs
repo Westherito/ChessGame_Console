@@ -16,11 +16,7 @@ namespace ChessGame_console
                     try
                     {
                         Console.Clear();
-                        Tela.printTab(part.Tab);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + part.Turno);
-                        Console.WriteLine("Aguardando Jogada: " + part.JogadorAtual);
-
+                        Tela.printPartida(part);
                         Console.WriteLine();
                         Console.Write("Digite a posição origem (Letra/Número): ");
                         Posicao origem = Tela.LerPosXadrez().convertPos();
