@@ -9,6 +9,7 @@ namespace xadrez
         public int Turno { get; private set; } //Definindo o turno
         public Cor JogadorAtual { get; private set; } //Definir jogador com base nas cores
         public bool Termina { get; private set; } //Definir o término do jogo
+        public bool Xeque { get; private set; } //Definir o término do jogo
         private HashSet<Peca> Pecas;
         private HashSet<Peca> PecasCapturadas;
 
@@ -17,12 +18,52 @@ namespace xadrez
             Tab = new Tabuleiro(8, 8);
             Turno = 1;
             JogadorAtual = Cor.Branca;
+            Termina = false;
+            Xeque = false;
             Pecas = new HashSet<Peca>();
             PecasCapturadas= new HashSet<Peca>();
             ColocarPecas();
         }
+        private Cor Adversario(Cor cor)
+        {
+            if (cor == Cor.Branca)
+            {
+                return Cor.Preta;
+            }
+            else
+            {
+                return Cor.Branca;
+            }
+        }
+        private Peca rei(Cor cor)
+        {
+            foreach(Peca x in pecasEmJogo(cor))
+            {
+                if (x is Rei)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
 
-        public void executaMov(Posicao origem,  Posicao destino)//executar o movimento conforme o usuário digitar
+        public bool verificarXeque(Cor cor)
+        {
+            Peca R = rei(cor);
+            if (R == null)
+            {
+                throw new TabuleiroException("Não existe Rei da Cor " + cor + " no jogo!");
+            }
+            foreach (Peca x in pecasEmJogo(Adversario(cor))) {
+                bool[,] mat = x.MovPossiveis();
+                if (mat[R.Posicao.Linha,R.Posicao.Coluna]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Peca executaMov(Posicao origem,  Posicao destino)//executar o movimento conforme o usuário digitar
         {
             Peca p = Tab.RetirPeca(origem);
             p.incremtQteMov();
@@ -32,15 +73,29 @@ namespace xadrez
             {
                 PecasCapturadas.Add(PecaCapt);
             }
+            return PecaCapt;
         }
-        public void realizaJogada(Posicao origem, Posicao destino)//Incrementar a passagem de turno e mudança de jogador
+        public void realizaJogada(Posicao origem, Posicao destino)//Relizando a jogada
         {
-            executaMov(origem, destino);
+            Peca pecaCapt = executaMov(origem, destino);
+            if (verificarXeque(JogadorAtual))//Desfazendo jogada em caso de xeque
+            {
+                retornarMov(origem, destino, pecaCapt);
+                throw new TabuleiroException("Você não pode se colocar em Xeque!");
+            }
+            if (verificarXeque(Adversario(JogadorAtual)))
+            {
+                Xeque = true;
+            }
+            else
+            {
+                Xeque = false;
+            }
             Turno++;
             mudaJogador();
 
         }
-        public void validaPosOrigem(Posicao pos)//erros em caso de escolhas feitas na origem
+        public void validaPosOrigem(Posicao pos)//Erros em caso de escolhas feitas na origem
         {
             if(Tab.peca(pos) == null)
             {
@@ -55,6 +110,18 @@ namespace xadrez
                 throw new TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida!");
             }
         }
+        public void retornarMov(Posicao origem, Posicao destino, Peca pecaCapt)
+        {
+            Peca p = Tab.RetirPeca(destino);
+            p.decremtQteMov();
+            if (pecaCapt != null)
+            {
+                Tab.ColocPeca(pecaCapt, destino);
+                PecasCapturadas.Remove(pecaCapt);
+            }
+            Tab.ColocPeca(p, origem);
+        }
+
         public void validaPosDestino(Posicao origem, Posicao destino)//Erros em caso de escolhas feitas no destino
         {
             if (!Tab.peca(origem).podeMover(destino))

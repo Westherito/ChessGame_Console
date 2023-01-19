@@ -13,10 +13,16 @@
             Tab = tab;
             QteMov = 0;
         }
-        public void incremtQteMov()//Número de movimentos feitos
+        public void incremtQteMov()//Acrescentando número de movimentos feitos
         {
             QteMov++;
         }
+        public void decremtQteMov()//Reduzindo número de movimentos feitos
+        {
+            QteMov--;
+        }
+
+
         public bool existMovPos() //Verificando na matrix se existe a peça para execução de mensagens de erro;
         {
             bool[,] mat = MovPossiveis();
