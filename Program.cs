@@ -42,6 +42,8 @@ namespace ChessGame_console
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Tela.printPartida(part);
             }
             catch (TabuleiroException e)//Executando erro caso houver
             {

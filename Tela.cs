@@ -14,10 +14,19 @@ namespace ChessGame_console
             printPecasCapturadas(part);
             Console.WriteLine();
             Console.WriteLine("Turno: " + part.Turno);
-            Console.WriteLine("Aguardando Jogada: " + part.JogadorAtual);
-            if (part.Xeque)
+            if (!part.Termina)
             {
-                Console.WriteLine(part.JogadorAtual + " Está em XEQUE!");
+                Console.WriteLine("Aguardando Jogada: " + part.JogadorAtual);
+                if (part.Xeque)
+                {
+                    Console.WriteLine(part.JogadorAtual + " Está em XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine();
+                Console.WriteLine("Vencedor: " + part.JogadorAtual);
             }
         }
 

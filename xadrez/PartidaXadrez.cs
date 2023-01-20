@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using tabuleiro;
 namespace xadrez
 {
@@ -54,13 +55,48 @@ namespace xadrez
             {
                 throw new TabuleiroException("Não existe Rei da Cor " + cor + " no jogo!");
             }
-            foreach (Peca x in pecasEmJogo(Adversario(cor))) {
+            foreach (Peca x in pecasEmJogo(Adversario(cor))) 
+            {
                 bool[,] mat = x.MovPossiveis();
-                if (mat[R.Posicao.Linha,R.Posicao.Coluna]) {
+                if (mat[R.Posicao.Linha,R.Posicao.Coluna]) 
+                {
                     return true;
                 }
             }
             return false;
+        }
+
+        public bool verificarXequemate(Cor cor)
+        {
+            if (!verificarXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca x in pecasEmJogo(cor))
+            {
+                bool[,] mat = x.MovPossiveis();
+                for (int i = 0; i < Tab.Linhas; i++)
+                {
+                    for (int j = 0; j < Tab.Colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Posicao origem = x.Posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapt = executaMov(origem,destino);
+                            bool testeXeque = verificarXeque(cor);
+                            retornarMov(origem, destino, pecaCapt);
+                            if (!testeXeque) 
+                            {
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public Peca executaMov(Posicao origem,  Posicao destino)//executar o movimento conforme o usuário digitar
@@ -91,8 +127,16 @@ namespace xadrez
             {
                 Xeque = false;
             }
-            Turno++;
-            mudaJogador();
+            //caso de xequemate, termina o jogo
+            if (verificarXequemate(Adversario(JogadorAtual)))
+            {
+                Termina = true;
+            }
+            else
+            {
+                Turno++;
+                mudaJogador();
+            }
 
         }
         public void validaPosOrigem(Posicao pos)//Erros em caso de escolhas feitas na origem
@@ -170,8 +214,13 @@ namespace xadrez
         }
         public void ColocarPecas() //Criação das peças de xadrez e suas posições
         {
+            colocarnovaPeca('b', 1, new Torre(Cor.Preta, Tab));
+            colocarnovaPeca('a', 1, new Rei(Cor.Preta, Tab));
+            colocarnovaPeca('c', 2, new Torre(Cor.Branca, Tab));
+            colocarnovaPeca('b', 8, new Torre(Cor.Branca, Tab));
+            colocarnovaPeca('c', 8, new Rei(Cor.Branca, Tab));
             //Peças do jogador 1
-            colocarnovaPeca('a', 1, new Torre(Cor.Branca, Tab));
+            /*colocarnovaPeca('a', 1, new Torre(Cor.Branca, Tab));
             colocarnovaPeca('b', 1, new Cavalo(Cor.Branca, Tab));
             colocarnovaPeca('c', 1, new Bispo(Cor.Branca, Tab));
             colocarnovaPeca('d', 1, new Rei(Cor.Branca, Tab));
@@ -204,7 +253,7 @@ namespace xadrez
             colocarnovaPeca('e', 7, new Peao(Cor.Preta, Tab));
             colocarnovaPeca('f', 7, new Peao(Cor.Preta, Tab));
             colocarnovaPeca('g', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab));
+            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab));*/
         }
     }
 }
