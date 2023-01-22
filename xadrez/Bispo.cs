@@ -24,53 +24,52 @@ namespace xadrez
 
             Posicao pos = new Posicao(0, 0);
 
-            //Cima
-            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna);
-            if (Tab.PosValida(pos) && checkMov(pos))
-            {
-                mat[pos.Linha, pos.Coluna] = true;
-            }
             //Cima direita
             pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna + 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
+            while (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
+                if (Tab.peca(pos) != null && Tab.peca(pos).Cor != Cor)
+                {
+                    break;
+                }
+                pos.definirVarlores(pos.Linha - 1, pos.Coluna + 1);
             }
-            //Direita
-            pos.definirVarlores(Posicao.Linha, Posicao.Coluna + 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
-            {
-                mat[pos.Linha, pos.Coluna] = true;
-            }
+
             //Baixo Direita
             pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
+            while (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
+                if (Tab.peca(pos) != null && Tab.peca(pos).Cor != Cor)
+                {
+                    break;
+                }
+                pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 1);
             }
-            //Baixo
-            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna);
-            if (Tab.PosValida(pos) && checkMov(pos))
-            {
-                mat[pos.Linha, pos.Coluna] = true;
-            }
+
             //Baixo Esquerda
             pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
+            while (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
+                if (Tab.peca(pos) != null && Tab.peca(pos).Cor != Cor)
+                {
+                    break;
+                }
+                pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 1);
             }
-            //Esquerda
-            pos.definirVarlores(Posicao.Linha, Posicao.Coluna - 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
-            {
-                mat[pos.Linha, pos.Coluna] = true;
-            }
+
             //Esquerda Cima
             pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 1);
-            if (Tab.PosValida(pos) && checkMov(pos))
+            while (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
+                if (Tab.peca(pos) != null && Tab.peca(pos).Cor != Cor)
+                {
+                    break;
+                }
+                pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 1);
             }
             return mat;
         }

@@ -24,54 +24,55 @@ namespace xadrez
 
             Posicao pos = new Posicao(0, 0);
 
-            //Cima
-            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna);
+            
+            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 2);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Cima direita
-            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna + 1);
+            
+            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna + 2);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Direita
-            pos.definirVarlores(Posicao.Linha, Posicao.Coluna + 1);
+            
+            pos.definirVarlores(Posicao.Linha - 2, Posicao.Coluna - 1);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Baixo Direita
-            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 1);
+            
+            pos.definirVarlores(Posicao.Linha - 2, Posicao.Coluna + 1);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Baixo
-            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna);
+
+            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 2);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Baixo Esquerda
-            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 1);
+
+            pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 2);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Esquerda
-            pos.definirVarlores(Posicao.Linha, Posicao.Coluna - 1);
+
+            pos.definirVarlores(Posicao.Linha + 2, Posicao.Coluna - 1);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
-            //Esquerda Cima
-            pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 1);
+
+            pos.definirVarlores(Posicao.Linha + 2, Posicao.Coluna + 1);
             if (Tab.PosValida(pos) && checkMov(pos))
             {
                 mat[pos.Linha, pos.Coluna] = true;
             }
+
             return mat;
         }
     }

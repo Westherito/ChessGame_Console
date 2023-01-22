@@ -214,13 +214,8 @@ namespace xadrez
         }
         public void ColocarPecas() //Criação das peças de xadrez e suas posições
         {
-            colocarnovaPeca('b', 1, new Torre(Cor.Preta, Tab));
-            colocarnovaPeca('a', 1, new Rei(Cor.Preta, Tab));
-            colocarnovaPeca('c', 2, new Torre(Cor.Branca, Tab));
-            colocarnovaPeca('b', 8, new Torre(Cor.Branca, Tab));
-            colocarnovaPeca('c', 8, new Rei(Cor.Branca, Tab));
             //Peças do jogador 1
-            /*colocarnovaPeca('a', 1, new Torre(Cor.Branca, Tab));
+            colocarnovaPeca('a', 1, new Torre(Cor.Branca, Tab));
             colocarnovaPeca('b', 1, new Cavalo(Cor.Branca, Tab));
             colocarnovaPeca('c', 1, new Bispo(Cor.Branca, Tab));
             colocarnovaPeca('d', 1, new Rei(Cor.Branca, Tab));
@@ -253,7 +248,7 @@ namespace xadrez
             colocarnovaPeca('e', 7, new Peao(Cor.Preta, Tab));
             colocarnovaPeca('f', 7, new Peao(Cor.Preta, Tab));
             colocarnovaPeca('g', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab));*/
+            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab));
         }
     }
 }

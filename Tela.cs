@@ -24,9 +24,10 @@ namespace ChessGame_console
             }
             else
             {
-                Console.WriteLine("XEQUEMATE!");
                 Console.WriteLine();
+                Console.WriteLine("XEQUEMATE!");
                 Console.WriteLine("Vencedor: " + part.JogadorAtual);
+                Console.WriteLine("Pressione Qualquer tecla para encerrar! Obrigado por jogar :3");
             }
         }
 
