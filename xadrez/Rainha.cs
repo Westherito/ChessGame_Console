@@ -33,7 +33,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.Linha -= 1;
+                pos.definirVarlores(pos.Linha - 1, pos.Coluna); 
             }
 
             //Cima direita
@@ -57,7 +57,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.Coluna += 1;
+                pos.definirVarlores(pos.Linha, pos.Coluna + 1);
             }
 
             //Baixo Direita
@@ -69,7 +69,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 1);
+                pos.definirVarlores(pos.Linha + 1, pos.Coluna + 1);
             }
 
             //Baixo
@@ -81,7 +81,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.Linha += 1;
+                pos.definirVarlores(pos.Linha + 1, pos.Coluna);
             }
 
             //Baixo Esquerda
@@ -93,7 +93,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 1);
+                pos.definirVarlores(pos.Linha + 1, pos.Coluna - 1);
             }
 
             //Esquerda
@@ -105,7 +105,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.Coluna -= 1;
+                pos.definirVarlores(pos.Linha, pos.Coluna - 1);
             }
 
             //Esquerda Cima
@@ -117,7 +117,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 1);
+                pos.definirVarlores(pos.Linha - 1, pos.Coluna - 1);
             }
             return mat;
         }

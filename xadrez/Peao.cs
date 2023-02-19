@@ -38,21 +38,27 @@ namespace xadrez
             
             if (Cor == Cor.Branca)
             {
+                //Movimento Peão branco
+                //para cima
                 pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna);
                 if (Tab.PosValida(pos) && espacoLivre(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Caso a peça não se moveu, pode mover duas casas
                 pos.definirVarlores(Posicao.Linha - 2, Posicao.Coluna);
-                if (Tab.PosValida(pos) && espacoLivre(pos) && QteMov == 0)
+                Posicao pos2 = new Posicao(Posicao.Linha - 1, Posicao.Coluna); 
+                if (Tab.PosValida(pos2) && espacoLivre(pos2) && Tab.PosValida(pos) && espacoLivre(pos) && QteMov == 0)
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Cima/esquerda
                 pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna - 1);
                 if (Tab.PosValida(pos) && checkPecaInimiga(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Cima direita
                 pos.definirVarlores(Posicao.Linha - 1, Posicao.Coluna + 1);
                 if (Tab.PosValida(pos) && checkPecaInimiga(pos))
                 {
@@ -61,21 +67,27 @@ namespace xadrez
             }
             else
             {
+                //Movimento Peão preto
+                //para baixo
                 pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna);
                 if (Tab.PosValida(pos) && espacoLivre(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Caso a peça não se moveu, pode mover duas casas
                 pos.definirVarlores(Posicao.Linha + 2, Posicao.Coluna);
+                Posicao pos2 = new Posicao(Posicao.Linha + 1, Posicao.Coluna);
                 if (Tab.PosValida(pos) && espacoLivre(pos) && QteMov == 0)
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Baixo/esquerda
                 pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna - 1);
                 if (Tab.PosValida(pos) && checkPecaInimiga(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
+                //Baixo/direita
                 pos.definirVarlores(Posicao.Linha + 1, Posicao.Coluna + 1);
                 if (Tab.PosValida(pos) && checkPecaInimiga(pos))
                 {
