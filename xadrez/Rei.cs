@@ -82,26 +82,26 @@ namespace xadrez
             if (QteMov == 0 && !Partida.Xeque)//Verificando se está em xeque
             {
                 // #Jogadas Especiais: Roque pequeno
-                Posicao PosT1 = new Posicao(Posicao.Linha, Posicao.Coluna - 3);
+                Posicao PosT1 = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
                 if (checkTorreRoque(PosT1))
-                {
-                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
-                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
-                    if (Tab.peca(p1) == null && Tab.peca(p2) == null)
-                    {
-                        mat[Posicao.Linha,Posicao.Coluna - 2] = true;
-                    }
-                }
-                // #Jogadas Especiais: Roque Grande
-                Posicao PosT2 = new Posicao(Posicao.Linha, Posicao.Coluna + 4);
-                if (checkTorreRoque(PosT2))
                 {
                     Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
                     Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna + 2);
-                    Posicao p3 = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
+                    if (Tab.peca(p1) == null && Tab.peca(p2) == null)
+                    {
+                        mat[Posicao.Linha,Posicao.Coluna + 2] = true;
+                    }
+                }
+                // #Jogadas Especiais: Roque Grande
+                Posicao PosT2 = new Posicao(Posicao.Linha, Posicao.Coluna - 4);
+                if (checkTorreRoque(PosT2))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
+                    Posicao p3 = new Posicao(Posicao.Linha, Posicao.Coluna - 3);
                     if (Tab.peca(p1) == null && Tab.peca(p2) == null && Tab.peca(p3) == null)
                     {
-                        mat[Posicao.Linha, Posicao.Coluna + 2] = true;
+                        mat[Posicao.Linha, Posicao.Coluna - 2] = true;
                     }
                 }
             }
