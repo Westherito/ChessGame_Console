@@ -1,5 +1,4 @@
 ﻿using tabuleiro;
-
 namespace xadrez
 {
     internal class Rainha : Peca

@@ -1,6 +1,5 @@
 ﻿using tabuleiro;
 using xadrez;
-
 namespace ChessGame_console
 {
     class Program

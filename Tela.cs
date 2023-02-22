@@ -1,5 +1,4 @@
-﻿using System.Text;
-using tabuleiro;
+﻿using tabuleiro;
 using xadrez;
 namespace ChessGame_console
 {

@@ -15,9 +15,5 @@ namespace xadrez
         {
             return new Posicao(8 - Linha, Coluna - 'a');
         }
-        public override string ToString() //imprimir a posição nas cordenada do xadrez
-        {
-            return "" + Coluna + Linha;
-        }
     }
 }

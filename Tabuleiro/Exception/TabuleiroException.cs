@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace tabuleiro
+﻿namespace tabuleiro
 {
     class TabuleiroException : Exception //Execeção persoanlizada
     {
