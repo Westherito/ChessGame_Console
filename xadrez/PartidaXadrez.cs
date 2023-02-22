@@ -1,4 +1,5 @@
-﻿using tabuleiro;
+﻿using System.Text;
+using tabuleiro;
 namespace xadrez
 {
     class PartidaXadrez
@@ -8,9 +9,9 @@ namespace xadrez
         public Cor JogadorAtual { get; private set; } //Definir jogador com base nas cores
         public bool Termina { get; private set; } //Definir o término do jogo
         public bool Xeque { get; private set; } //Definir o término do jogo
-        private HashSet<Peca> Pecas;
-        private HashSet<Peca> PecasCapturadas;
-
+        private HashSet<Peca> Pecas; //conjunto de peças do jogo
+        private HashSet<Peca> PecasCapturadas; //conjunto de peças capturadas
+        public Peca riscoEnPassant { get; private set; } // caso o peão se movimente a primeira vez, recebe essa variável
         public PartidaXadrez()//Otimizar o tabuleiro em um construtor
         {
             Tab = new Tabuleiro(8, 8);
@@ -18,6 +19,7 @@ namespace xadrez
             JogadorAtual = Cor.Branca;
             Termina = false;
             Xeque = false;
+            riscoEnPassant = null;
             Pecas = new HashSet<Peca>();
             PecasCapturadas= new HashSet<Peca>();
             ColocarPecas();
@@ -100,11 +102,11 @@ namespace xadrez
         {
             Peca p = Tab.RetirPeca(origem);
             p.incremtQteMov();
-            Peca PecaCapt = Tab.RetirPeca(destino);
+            Peca pecaCapt = Tab.RetirPeca(destino);
             Tab.ColocPeca(p, destino);
-            if(PecaCapt !=null)
+            if(pecaCapt !=null)
             {
-                PecasCapturadas.Add(PecaCapt);
+                PecasCapturadas.Add(pecaCapt);
             }
 
             // #Jogadas Especiais: Roque (Realizando Movimento)
@@ -126,8 +128,28 @@ namespace xadrez
                 T.incremtQteMov();
                 Tab.ColocPeca(T, destinoT);
             }
+            // #Jogadas Especiais: En Passant (Realizando Movimento)
+            if (p is Peao)
+            {
+                if (origem.Coluna != destino.Coluna && pecaCapt == null) 
+                {
+                    Posicao posP;
+                    if (p.Cor == Cor.Branca)
+                    {
+                        posP = new Posicao(destino.Linha + 1, destino.Coluna);
+                        
 
-            return PecaCapt;
+                    }
+                    else
+                    {
+                        posP = new Posicao(destino.Linha - 1, destino.Coluna);
+                    }
+                    pecaCapt = Tab.RetirPeca(posP);
+                    PecasCapturadas.Add(pecaCapt);
+                }
+            }
+
+            return pecaCapt;
         }
         public void realizaJogada(Posicao origem, Posicao destino)//Relizando a jogada
         {
@@ -155,6 +177,13 @@ namespace xadrez
                 Turno++;
                 mudaJogador();
             }
+            Peca p = Tab.peca(destino);
+            // #Jogadas Especiais: En Passant
+            if (p is Peao && (destino.Linha == origem.Linha - 2  || destino.Linha == origem.Linha + 2)) 
+            {
+                riscoEnPassant = p;
+            }
+
 
         }
         public void validaPosOrigem(Posicao pos)//Erros em caso de escolhas feitas na origem
@@ -202,6 +231,25 @@ namespace xadrez
                 T.decremtQteMov();
                 Tab.ColocPeca(T, origemT);
             }
+            // #Jogadas Especiais: En Passant (Desfazendo Movimento)
+            if (p is Peao)
+            {
+                if (origem.Coluna != destino.Coluna && pecaCapt == riscoEnPassant)
+                {
+                    Peca peao = Tab.RetirPeca(destino);
+                    Posicao posP;
+                    if (p.Cor == Cor.Branca)
+                    {
+                        posP = new Posicao (3, destino.Coluna);
+                    }
+                    else
+                    {
+                        posP = new Posicao(4, destino.Coluna);
+                    }
+                    Tab.ColocPeca(peao, posP);
+                }
+            }
+
         }
 
         public void validaPosDestino(Posicao origem, Posicao destino)//Erros em caso de escolhas feitas no destino
@@ -261,14 +309,14 @@ namespace xadrez
             colocarnovaPeca('h', 1, new Torre(Cor.Branca, Tab));
             colocarnovaPeca('g', 1, new Cavalo(Cor.Branca, Tab));
             colocarnovaPeca('f', 1, new Bispo(Cor.Branca, Tab));
-            colocarnovaPeca('a', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('b', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('c', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('d', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('e', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('f', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('g', 2, new Peao(Cor.Branca, Tab));
-            colocarnovaPeca('h', 2, new Peao(Cor.Branca, Tab));
+            colocarnovaPeca('a', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('b', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('c', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('d', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('e', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('f', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('g', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('h', 2, new Peao(Cor.Branca, Tab, this));
             //Peças do jogador 2
             colocarnovaPeca('a', 8, new Torre(Cor.Preta, Tab));
             colocarnovaPeca('b', 8, new Cavalo(Cor.Preta, Tab));
@@ -278,14 +326,32 @@ namespace xadrez
             colocarnovaPeca('h', 8, new Torre(Cor.Preta, Tab));
             colocarnovaPeca('g', 8, new Cavalo(Cor.Preta, Tab));
             colocarnovaPeca('f', 8, new Bispo(Cor.Preta, Tab));
-            colocarnovaPeca('a', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('b', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('c', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('d', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('e', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('f', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('g', 7, new Peao(Cor.Preta, Tab));
-            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab));
+            colocarnovaPeca('a', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('b', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('c', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('d', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('e', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('f', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('g', 7, new Peao(Cor.Preta, Tab, this));
+            colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab, this));
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("  _______  __   __  _______  _______  _______    _______  _______  __   __  _______ ");
+            sb.AppendLine(" |      _||  | |  ||       ||       ||       |  |       ||   _   ||  |_|  ||       |");
+            sb.AppendLine(" |     |  |  |_|  ||    ___||  _____||  _____|  |    ___||  | |  ||       ||    ___|");
+            sb.AppendLine(" |     |  |       ||   |___ | |_____ | |_____   |   | __ |  | |  || || || ||   |___ ");
+            sb.AppendLine(" |     |  |   _   ||    ___||_____  ||_____  |  |   ||  ||  |_|  || || || ||    ___|");
+            sb.AppendLine(" |     |_ |  | |  ||   |___  _____| | _____| |  |   |_| ||   _   || ||_|| ||   |___ ");
+            sb.AppendLine(" |_______||__| |__||_______||_______||_______|  |_______||__| |__||_|   |_||_______|");
+            sb.AppendLine();
+            sb.AppendLine("                              Rodando em TERMINAL :D");
+            sb.AppendLine("                                  By: Westherito");
+            sb.AppendLine("                          Pressione ENTER para continuar...");
+
+            return sb.ToString();
+
         }
     }
 }

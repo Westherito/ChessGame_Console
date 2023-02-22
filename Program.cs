@@ -9,8 +9,11 @@ namespace ChessGame_console
         {
             try //Testando programa em caso de erros
             {
-                
                 PartidaXadrez part = new PartidaXadrez();//Criando o tabuleiro
+                Console.WriteLine(part.ToString());//Titulo do jogo
+                Console.WriteLine();              
+                Console.ReadLine();
+                Console.Clear();
                 while (!part.Termina)
                 {
                     try

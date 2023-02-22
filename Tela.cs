@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
+﻿using System.Text;
 using tabuleiro;
 using xadrez;
 namespace ChessGame_console
@@ -19,13 +17,13 @@ namespace ChessGame_console
                 Console.WriteLine("Aguardando Jogada: " + part.JogadorAtual);
                 if (part.Xeque)
                 {
-                    Console.WriteLine(part.JogadorAtual + " Está em XEQUE!");
+                    Console.WriteLine(part.JogadorAtual + " Está em XEQUE!" );
                 }
             }
             else
             {
                 Console.WriteLine();
-                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine(" XEQUEMATE! ");
                 Console.WriteLine("Vencedor: " + part.JogadorAtual);
                 Console.WriteLine("Pressione Qualquer tecla para encerrar! Obrigado por jogar :3");
             }
@@ -108,7 +106,7 @@ namespace ChessGame_console
         {
             if (peca == null)
             {
-                Console.Write("- ");
+                Console.Write("■ ");
             }
             else
             {
