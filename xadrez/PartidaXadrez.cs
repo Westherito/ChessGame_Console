@@ -166,19 +166,13 @@ namespace xadrez
             {
                 if ((p.Cor == Cor.Branca && destino.Linha == 0) || (p.Cor == Cor.Preta && destino.Linha == 7))
                 {
-                    p = Tab.RetirPeca(destino);
-                    Pecas.Remove(p);
-                    Peca rainha = new Rainha(p.Cor, Tab);
-                    Tab.ColocPeca(rainha, destino);
-                    Pecas.Add(rainha);
-                    /*
                     Console.WriteLine();
                     Console.WriteLine("Escolha Sua Peça para Substituir o Peão");
                     Console.WriteLine();
                     Console.Write("Escolha Entre: d (Dama), c (Cavalo), b (Bispo) ou t (Torre): ");
                     char opcao = char.Parse(Console.ReadLine());
                     escolherPeca(opcao, destino);
-                    */
+                    
                 }
             }
 
@@ -207,6 +201,40 @@ namespace xadrez
             }
 
 
+        }
+        public void escolherPeca(char opcao, Posicao destino)//#Jogada Especial: Promoção (Escolha de Peças)   
+        {
+            Peca p = Tab.peca(destino.Linha, destino.Coluna);
+            p = Tab.RetirPeca(destino);
+            Pecas.Remove(p);
+            if (opcao == 'd')
+            {
+                Peca rainha = new Rainha(p.Cor, Tab);
+                Tab.ColocPeca(rainha, destino);
+                Pecas.Add(rainha);
+            }
+            else if (opcao == 't')
+            {
+                Peca torre = new Torre(p.Cor, Tab);
+                Tab.ColocPeca(torre, destino);
+                Pecas.Add(torre);
+            }
+            else if (opcao == 'b')
+            {
+                Peca bispo = new Bispo(p.Cor, Tab);
+                Tab.ColocPeca(bispo, destino);
+                Pecas.Add(bispo);
+            }
+            else if (opcao == 'c')
+            {
+                Peca cavalo = new Cavalo(p.Cor, Tab);
+                Tab.ColocPeca(cavalo, destino);
+                Pecas.Add(cavalo);
+            }
+            else
+            {
+                throw new TabuleiroException("Você não pode escolher outra peça ou ficar sem escolher!");
+            }
         }
         public void validaPosOrigem(Posicao pos)//Erros em caso de escolhas feitas na origem
         {
@@ -315,41 +343,6 @@ namespace xadrez
             aux.ExceptWith(PecaCapturada(cor));
             return aux;
         }
-        public void escolherPeca(char opcao, Posicao destino)
-        {
-            if (opcao == 'd')
-            {
-                Peca p = Tab.peca(destino.Linha, destino.Coluna);
-                Peca rainha = new Rainha(p.Cor, Tab);
-                Tab.ColocPeca(rainha, destino);
-                Pecas.Add(rainha);
-            }
-            else if (opcao == 't')
-            {
-                Peca p = Tab.peca(destino.Linha, destino.Coluna);
-                Peca torre = new Torre(p.Cor, Tab);
-                Tab.ColocPeca(torre, destino);
-                Pecas.Add(torre);
-            }
-            else if (opcao == 'b')
-            {
-                Peca p = Tab.peca(destino.Linha, destino.Coluna);
-                Peca bispo = new Bispo(p.Cor, Tab);
-                Tab.ColocPeca(bispo, destino);
-                Pecas.Add(bispo);
-            }
-            else if (opcao == 'c')
-            {
-                Peca p = Tab.peca(destino.Linha, destino.Coluna);
-                Peca cavalo = new Cavalo(p.Cor, Tab);
-                Tab.ColocPeca(cavalo, destino);
-                Pecas.Add(cavalo);
-            }
-            else
-            {
-                throw new TabuleiroException("Você não pode escolher outra peça ou ficar sem escolher!");
-            }
-        }
         public void colocarnovaPeca(char coluna, int linha, Peca peca) //Metodo otimizado de colocar peças
         {
             Tab.ColocPeca(peca, new PosicaoXadrez(coluna, linha).convertPos());
@@ -372,7 +365,7 @@ namespace xadrez
             colocarnovaPeca('d', 2, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('e', 2, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('f', 2, new Peao(Cor.Branca, Tab, this));
-            colocarnovaPeca('g', 2, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('g', 5, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('h', 2, new Peao(Cor.Branca, Tab, this));
             //Peças do jogador 2
             colocarnovaPeca('a', 8, new Torre(Cor.Preta, Tab));

@@ -23,21 +23,21 @@ namespace ChessGame_console
             {
                 Console.WriteLine();
                 Console.WriteLine(" XEQUEMATE! ");
-                Console.WriteLine("Vencedor: " + part.JogadorAtual);
-                Console.WriteLine("Pressione Qualquer tecla para encerrar! Obrigado por jogar :3");
+                Console.WriteLine(" Vencedor: " + part.JogadorAtual);
+                Console.WriteLine(" Pressione Qualquer tecla para encerrar! Obrigado por jogar :3");
             }
         }
 
         public static void printPecasCapturadas(PartidaXadrez part)//Imprimindo pecas capturadas
         {
-            Console.WriteLine("Peças Capturadas");
-            Console.Write("Brancas: ");
+            Console.WriteLine(" Peças Capturadas");
+            Console.Write(" Brancas: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             printConjunto(part.PecaCapturada(Cor.Branca));
             Console.ForegroundColor = aux;
             Console.WriteLine();
-            Console.Write("Pretas: ");
+            Console.Write(" Pretas: ");
             ConsoleColor aux2 = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
             printConjunto(part.PecaCapturada(Cor.Preta));
@@ -97,9 +97,15 @@ namespace ChessGame_console
         public static PosicaoXadrez LerPosXadrez()//Fazendo leitura das peças no tabuleiro
         {
             string s = Console.ReadLine();
-            char coluna = s[0];
-            int linha = int.Parse(s[1] + "");
-            return new PosicaoXadrez(coluna, linha);
+            if (s.Length <= 2 && char.IsLetter(s[0]) && char.IsDigit(s[1])) {
+                char coluna = s[0];
+                int linha = int.Parse(s[1] + "");
+                return new PosicaoXadrez(coluna, linha);
+            }
+            else
+            {
+                throw new TabuleiroException("Digite uma posição válida!")
+;           }
         }
         public static void printPeca(Peca peca) //Função para colorir peças no Console
         {
