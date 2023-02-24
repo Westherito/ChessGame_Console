@@ -1,14 +1,15 @@
-﻿using tabuleiro;
+﻿using ChessGame_console.tabuleiro.Enum;
+using tabuleiro;
 namespace xadrez
 {
     class Bispo : Peca
     {
-        public Bispo(Cor cor, Tabuleiro tab) : base(cor, tab)
+        public Bispo(Cor cor, Tabuleiro tab) : base(cor, tab)//A peça receberá estes atributos
         {
 
         }
 
-        public override string ToString()
+        public override string ToString()//Figura da peça
         {
             return "B";
         }
@@ -17,7 +18,7 @@ namespace xadrez
             Peca p = Tab.peca(pos);
             return p == null || p.Cor != Cor;
         }
-        public override bool[,] MovPossiveis()//Função para checar os movimentos do rei em relação ao jogo
+        public override bool[,] MovPossiveis()//Função para checar os movimentos do Bispo em relação ao jogo
         {
             bool[,] mat = new bool[Tab.Linhas, Tab.Colunas];
 

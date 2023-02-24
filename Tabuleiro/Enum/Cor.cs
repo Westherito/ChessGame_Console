@@ -1,4 +1,4 @@
-﻿namespace tabuleiro
+﻿namespace ChessGame_console.tabuleiro.Enum
 {
     enum Cor //enumeração para cores
     {

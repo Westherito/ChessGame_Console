@@ -1,18 +1,19 @@
 ﻿using System.Text;
+using ChessGame_console.tabuleiro.Enum;
 using tabuleiro;
 namespace xadrez
 {
     class PartidaXadrez
     {
-        public Tabuleiro Tab { get; private set; } 
+        public Tabuleiro Tab { get; private set; } //Definindo tabuleiro
         public int Turno { get; private set; } //Definindo o turno
         public Cor JogadorAtual { get; private set; } //Definir jogador com base nas cores
         public bool Termina { get; private set; } //Definir o término do jogo
         public bool Xeque { get; private set; } //Definir o término do jogo
-        private HashSet<Peca> Pecas; //conjunto de peças do jogo
-        private HashSet<Peca> PecasCapturadas; //conjunto de peças capturadas
-        public Peca riscoEnPassant { get; private set; } // caso o peão se movimente a primeira vez, recebe essa variável
-        public PartidaXadrez()//Otimizar o tabuleiro em um construtor
+        private HashSet<Peca> Pecas; //Conjunto de peças do jogo
+        private HashSet<Peca> PecasCapturadas; //Conjunto de peças capturadas
+        public Peca riscoEnPassant { get; private set; }//Caso o peão se movimente a primeira vez, recebe essa variável
+        public PartidaXadrez()//Otimizando o tabuleiro em um construtor
         {
             Tab = new Tabuleiro(8, 8);
             Turno = 1;
@@ -24,7 +25,7 @@ namespace xadrez
             PecasCapturadas = new HashSet<Peca>();
             ColocarPecas();
         }
-        private Cor Adversario(Cor cor)
+        private Cor Adversario(Cor cor)//Verificando Adversário
         {
             if (cor == Cor.Branca)
             {
@@ -35,7 +36,7 @@ namespace xadrez
                 return Cor.Branca;
             }
         }
-        private Peca rei(Cor cor)
+        private Peca rei(Cor cor)//Verificando se existe Rei no jogo
         {
             foreach(Peca x in pecasEmJogo(cor))
             {
@@ -47,7 +48,7 @@ namespace xadrez
             return null;
         }
 
-        public bool verificarXeque(Cor cor)
+        public bool verificarXeque(Cor cor)//Verificando Xeque
         {
             Peca R = rei(cor);
             if (R == null)
@@ -65,14 +66,14 @@ namespace xadrez
             return false;
         }
 
-        public bool verificarXequemate(Cor cor)
+        public bool verificarXequemate(Cor cor)//Verificando Xequemate
         {
             if (!verificarXeque(cor))
             {
                 return false;
             }
 
-            foreach (Peca x in pecasEmJogo(cor))
+            foreach (Peca x in pecasEmJogo(cor))//Mapeando todas as peças do jogo em valores booleanos
             {
                 bool[,] mat = x.MovPossiveis();
                 for (int i = 0; i < Tab.Linhas; i++)
@@ -98,7 +99,7 @@ namespace xadrez
             return true;
         }
 
-        public Peca executaMov(Posicao origem,  Posicao destino)//executar o movimento conforme o usuário digitar
+        public Peca executaMov(Posicao origem,  Posicao destino)//Executar o movimento conforme o usuário digitar
         {
             Peca p = Tab.RetirPeca(origem);
             p.incremtQteMov();
@@ -109,8 +110,8 @@ namespace xadrez
                 PecasCapturadas.Add(pecaCapt);
             }
 
-            // #Jogadas Especiais: Roque (Realizando Movimento)
-            // #Jogadas Especiais: Roque pequeno
+            //#Jogadas Especiais: Roque (Realizando Movimento)
+            //#Jogadas Especiais: Roque pequeno
             if (p is Rei && destino.Coluna == origem.Coluna + 2)
             {
                 Posicao origemT = new Posicao(origem.Linha, origem.Coluna + 3);
@@ -119,7 +120,7 @@ namespace xadrez
                 T.incremtQteMov();
                 Tab.ColocPeca(T, destinoT);
             }
-            // #Jogadas Especiais: Roque grande
+            //#Jogadas Especiais: Roque grande
             if (p is Rei && destino.Coluna == origem.Coluna - 2)
             {
                 Posicao origemT = new Posicao(origem.Linha, origem.Coluna - 4);
@@ -128,7 +129,7 @@ namespace xadrez
                 T.incremtQteMov();
                 Tab.ColocPeca(T, destinoT);
             }
-            // #Jogadas Especiais: En Passant (Realizando Movimento)
+            //#Jogadas Especiais: En Passant (Realizando Movimento)
             if (p is Peao)
             {
                 if (origem.Coluna != destino.Coluna && pecaCapt == null) 
@@ -176,7 +177,7 @@ namespace xadrez
                 }
             }
 
-            if (verificarXeque(Adversario(JogadorAtual))) //verificando xeque
+            if (verificarXeque(Adversario(JogadorAtual)))//Verificando xeque
             {
                 Xeque = true;
             }
@@ -184,7 +185,7 @@ namespace xadrez
             {
                 Xeque = false;
             }
-            //caso de xequemate, termina o jogo
+            //Caso de xequemate, termina o jogo
             if (verificarXequemate(Adversario(JogadorAtual)))
             {
                 Termina = true;
@@ -194,7 +195,7 @@ namespace xadrez
                 Turno++;
                 mudaJogador();
             }
-            // #Jogadas Especiais: En Passant
+            //#Jogadas Especiais: En Passant
             if (p is Peao && (destino.Linha == origem.Linha - 2  || destino.Linha == origem.Linha + 2)) 
             {
                 riscoEnPassant = p;
@@ -365,7 +366,7 @@ namespace xadrez
             colocarnovaPeca('d', 2, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('e', 2, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('f', 2, new Peao(Cor.Branca, Tab, this));
-            colocarnovaPeca('g', 5, new Peao(Cor.Branca, Tab, this));
+            colocarnovaPeca('g', 2, new Peao(Cor.Branca, Tab, this));
             colocarnovaPeca('h', 2, new Peao(Cor.Branca, Tab, this));
             //Peças do jogador 2
             colocarnovaPeca('a', 8, new Torre(Cor.Preta, Tab));
@@ -385,7 +386,7 @@ namespace xadrez
             colocarnovaPeca('g', 7, new Peao(Cor.Preta, Tab, this));
             colocarnovaPeca('h', 7, new Peao(Cor.Preta, Tab, this));
         }
-        public override string ToString()
+        public override string ToString() //Imprimindo a tela de Início
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("  _______  __   __  _______  _______  _______    _______  _______  __   __  _______ ");
@@ -396,9 +397,22 @@ namespace xadrez
             sb.AppendLine(" |     |_ |  | |  ||   |___  _____| | _____| |  |   |_| ||   _   || ||_|| ||   |___ ");
             sb.AppendLine(" |_______||__| |__||_______||_______||_______|  |_______||__| |__||_|   |_||_______|");
             sb.AppendLine();
-            sb.AppendLine("                              Rodando em TERMINAL :D");
+            sb.AppendLine("                              Rodando em CONSOLE :D");
             sb.AppendLine("                                  By: Westherito");
-            sb.AppendLine("                          Pressione ENTER para continuar...");
+            sb.AppendLine();
+            sb.AppendLine(" COMO JOGAR: Para movimentar as Peças, digite as coordenadas para selecionar a peça ");
+            sb.AppendLine(" e depois para direcionar o destino da peça.");
+            sb.AppendLine();
+            sb.AppendLine("         Exemplo: Um peão está na casa A3, neste caso:");
+            sb.AppendLine("         Sua ORIGEM será: A3");
+            sb.AppendLine("         E seu DESTINO será: A4");
+            sb.AppendLine();
+            sb.AppendLine("         OBS: Este jogo contém as seguintes JOGADAS ESPECIAS:");
+            sb.AppendLine("         - En Passant");
+            sb.AppendLine("         - Promoção");
+            sb.AppendLine("         - Roque Pequeno e Grande");
+            sb.AppendLine();
+            sb.AppendLine("                          Pressione QUALQUER TECLA para continuar...");
 
             return sb.ToString();
 

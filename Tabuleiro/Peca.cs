@@ -1,11 +1,12 @@
-﻿namespace tabuleiro
+﻿using ChessGame_console.tabuleiro.Enum;
+namespace tabuleiro
 {
     abstract class Peca //Configuração de peças e suas caracteristicas
     {
-        public Posicao Posicao { get; set; }
-        public Cor Cor { get; protected set; }
-        public int QteMov { get; protected set; }
-        public Tabuleiro Tab { get; protected set; }    
+        public Posicao Posicao { get; set; }//Identificando Posição
+        public Cor Cor { get; protected set; }//Identificando cor
+        public int QteMov { get; protected set; }//Quantidade de movimentos
+        public Tabuleiro Tab { get; protected set; }//Identificando tabuleiro
         public Peca(Cor cor, Tabuleiro tab) //Criação de peças
         {
             Posicao = null;

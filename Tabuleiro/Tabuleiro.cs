@@ -4,22 +4,22 @@
     {
         public int Linhas { get; set; }
         public int Colunas { get; set; }
-        private Peca[,] Pecas { get; set; }
-        public Tabuleiro(int linhas, int colunas) //Criação de matriz para mapear o tabuleiro
+        private Peca[,] Pecas { get; set; }//Matriz de peças
+        public Tabuleiro(int linhas, int colunas)//Criação de matriz para mapear o tabuleiro
         {
             Linhas = linhas;
             Colunas = colunas;
             Pecas = new Peca[linhas,colunas];
         }
-        public Peca peca(int linhas, int colunas) //Metodo para acessar as peças de modo seguro
+        public Peca peca(int linhas, int colunas)//Metodo para acessar as peças de modo seguro
         {
             return Pecas[linhas,colunas];
         }
-        public Peca peca(Posicao pos) //Posição das peças pela classe Posição
+        public Peca peca(Posicao pos)//Posição das peças pela classe Posição
         {
             return Pecas[pos.Linha, pos.Coluna];
         }
-        public bool PosValida(Posicao pos) //Validando se a posição existe no tabuleiro
+        public bool PosValida(Posicao pos)//Validando se a posição existe no tabuleiro
         {
             if (pos.Linha < 0 || pos.Linha >= Linhas || pos.Coluna < 0 || pos.Coluna >= Colunas)
             {
@@ -27,7 +27,7 @@
             }
             return true;
         }
-        public void ErroPosicao(Posicao pos) //Exibindo mensagem de erro de posição
+        public void ErroPosicao(Posicao pos)//Exibindo mensagem de erro de posição
         {
             if (!PosValida(pos))
             {
@@ -36,19 +36,19 @@
         }
         public bool ExistPeca(Posicao pos)
         {
-            ErroPosicao(pos); //Verificando primeiro se teve erro de posição
-            return peca(pos) != null; //Retornando peça
+            ErroPosicao(pos);//Verificando primeiro se teve erro de posição
+            return peca(pos) != null;//Retornando peça
         }
         public void ColocPeca(Peca p, Posicao pos)//Método para colocação de peças, em qual tabuleiro, e a posição
         {
             if (ExistPeca(pos))
             {
-                throw new TabuleiroException("Já existe uma peça nessa posição!"); //Exibindo erro caso ja tiver uma peça
+                throw new TabuleiroException("Já existe uma peça nessa posição!");//Exibindo erro caso ja tiver uma peça
             }
             Pecas[pos.Linha, pos.Coluna] = p;
             p.Posicao = pos;
         }
-        public Peca RetirPeca(Posicao pos)
+        public Peca RetirPeca(Posicao pos)//Retirando peça do tabuleiro
         {
             if(peca(pos) == null)
             {

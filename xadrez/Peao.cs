@@ -1,15 +1,16 @@
-﻿using tabuleiro;
+﻿using ChessGame_console.tabuleiro.Enum;
+using tabuleiro;
 namespace xadrez
 {
     class Peao : Peca
     {
         private PartidaXadrez Partida;
-        public Peao(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor, tab)
+        public Peao(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor, tab)//A peça receberá estes atributos
         {
             Partida = partida;
         }
 
-        public override string ToString()
+        public override string ToString()//Figura da peça
         {
             return "P";
         }
@@ -19,18 +20,18 @@ namespace xadrez
             return p == null || p.Cor != Cor;
         }
 
-        private bool checkPecaInimiga(Posicao pos)
+        private bool checkPecaInimiga(Posicao pos)//Verificando peça adversária
         {
             Peca p = Tab.peca(pos);
             return Tab.peca(pos) != null && p.Cor != Cor;
         }
 
-        private bool espacoLivre(Posicao pos)
+        private bool espacoLivre(Posicao pos)//Verificando se há espaço livre
         {
             return Tab.peca(pos) == null;
         }
 
-        public override bool[,] MovPossiveis()//Função para checar os movimentos do rei em relação ao jogo
+        public override bool[,] MovPossiveis()//Função para checar os movimentos do Peão em relação ao jogo
         {
             bool[,] mat = new bool[Tab.Linhas, Tab.Colunas];
 

@@ -1,13 +1,14 @@
-﻿using tabuleiro;
+﻿using ChessGame_console.tabuleiro.Enum;
+using tabuleiro;
 namespace xadrez
 {
     class Torre : Peca
     {
-        public Torre(Cor cor, Tabuleiro tab) : base(cor, tab)
+        public Torre(Cor cor, Tabuleiro tab) : base(cor, tab)//A peça receberá estes atributos
         {
 
         }
-        public override string ToString()
+        public override string ToString()//Figura da Peça
         {
             return "T";
         }

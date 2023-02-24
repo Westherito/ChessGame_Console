@@ -9,7 +9,7 @@
             Linha = linha;
             Coluna = coluna;
         }
-        public void definirVarlores(int linha , int coluna)
+        public void definirVarlores(int linha , int coluna)//Definindo valores de coluna e linha
         {
             Linha = linha;
             Coluna = coluna;

@@ -1,14 +1,15 @@
-﻿using tabuleiro;
+﻿using ChessGame_console.tabuleiro.Enum;
+using tabuleiro;
 namespace xadrez
 {
     internal class Rainha : Peca
     {
-        public Rainha(Cor cor, Tabuleiro tab) : base(cor, tab)
+        public Rainha(Cor cor, Tabuleiro tab) : base(cor, tab)//A peça receberá estes atributos
         {
 
         }
 
-        public override string ToString()
+        public override string ToString()//Figura da Peça
         {
             return "D";
         }
@@ -17,7 +18,7 @@ namespace xadrez
             Peca p = Tab.peca(pos);
             return p == null || p.Cor != Cor;
         }
-        public override bool[,] MovPossiveis()//Função para checar os movimentos do rei em relação ao jogo
+        public override bool[,] MovPossiveis()//Função para checar os movimentos da Rainha/Dama em relação ao jogo
         {
             bool[,] mat = new bool[Tab.Linhas, Tab.Colunas];
 

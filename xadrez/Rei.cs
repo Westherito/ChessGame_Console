@@ -1,14 +1,15 @@
-﻿using tabuleiro;
+﻿using ChessGame_console.tabuleiro.Enum;
+using tabuleiro;
 namespace xadrez
 {
     class Rei : Peca
     {
         private PartidaXadrez Partida;
-        public Rei(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor,tab)
+        public Rei(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor,tab)//A peça receberá estes atributos
         {
             Partida = partida;
         }
-        public override string ToString()
+        public override string ToString()//Figura da peça
         {
             return "R"; 
         }
@@ -17,7 +18,7 @@ namespace xadrez
             Peca p = Tab.peca(pos);
             return p == null || p.Cor != Cor;
         }
-        private bool checkTorreRoque(Posicao pos)
+        private bool checkTorreRoque(Posicao pos)//Checando Torre Para Jogada especial
         {
             Peca p = Tab.peca(pos);
             return p != null && p is Torre && p.Cor == Cor && p.QteMov == 0;
